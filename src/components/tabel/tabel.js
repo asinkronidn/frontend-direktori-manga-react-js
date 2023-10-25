@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const Tabel = (props) => {
   const [data, setdata] = useState();
   const [error, setError] = useState();
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:3001/mangalist")
@@ -12,10 +13,12 @@ const Tabel = (props) => {
         if (!res.ok) {
           throw Error("Cannot Fetch The End Point..");
         }
+        setloading(true);
         return res.json();
       })
       .then((data) => {
         const datas = data && data.data;
+        setloading(false);
         setdata(datas);
       })
       .catch((err) => {
@@ -77,7 +80,7 @@ const Tabel = (props) => {
             </tr>
           </thead>
           <tbody>
-            {data ? (
+            {data && (
               data.map((manga) => (
                 <tr key={manga.id} className="table-row">
                   <td>{manga.judul}</td>
@@ -101,13 +104,11 @@ const Tabel = (props) => {
                   </td>
                 </tr>
               ))
-            ) : (
-              <tr>
-                <td colSpan="8">Tidak Ada Manga</td>
-              </tr>
             )}
           </tbody>
         </table>
+        {loading && <div>Loading...</div>}
+        {error && <div>Error Terjadi</div>}
       </div>
     </div>
   );
