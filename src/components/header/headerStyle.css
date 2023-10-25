@@ -1,0 +1,31 @@
+.header-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.header-title{
+    font-size: 35px;
+    font-weight: 500;
+    color: var(--text-main);
+}
+.button-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-wrapper img{
+    width: 20px;
+    height: 20px;
+}
+.button-wrapper div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: var(--secondary);
+    color: white;
+    font-weight: 500;
+}

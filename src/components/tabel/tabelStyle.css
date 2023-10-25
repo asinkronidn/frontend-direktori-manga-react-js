@@ -1,0 +1,50 @@
+.table-container {
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.table-container table {
+  color: var(--text-main);
+  width: 100%;
+}
+
+/* tabelStyle.css */
+.table-container {
+  padding: 10px 20px;
+  background-color: white;
+  margin: 20px; /* Add margin for the entire table container */
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+.custom-table th {
+  color: var(--text-main);
+  text-align: left;
+  padding: 20px;
+  border-bottom: 2px solid #ddd;
+}
+
+.custom-table td {
+  padding: 15px;
+  border-bottom: 2px solid #ddd;
+}
+.custom-table td .wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.custom-table img{
+    height: 20px;
+    width: 20px;
+}
+.table-row {
+  margin-bottom: 50px; /* Add margin between <tr> elements */
+}
