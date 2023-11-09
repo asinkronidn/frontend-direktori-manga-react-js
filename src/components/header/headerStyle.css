@@ -1,31 +1,21 @@
-.header-container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.header-title{
-    font-size: 35px;
-    font-weight: 500;
-    color: var(--text-main);
-}
-.button-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.button-wrapper img{
-    width: 20px;
-    height: 20px;
-}
-.button-wrapper div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    padding: 10px 15px;
-    border-radius: 8px;
-    background-color: var(--secondary);
-    color: white;
-    font-weight: 500;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .header-container {
+    @apply flex justify-between items-center mb-[20px];
+  }
+  .header-title {
+    @apply text-[35px] font-[500];
+  }
+  .header-title {
+    @apply text-[35px] font-medium text-[color:var(--text-main)];
+  }
+  .button-wrapper img {
+    @apply w-5 h-5;
+  }
+  .button-wrapper div {
+    @apply flex justify-center items-center gap-[5px] bg-[color:var(--secondary)] text-[white] font-medium px-[15px] py-2.5 rounded-lg;
+  }
 }

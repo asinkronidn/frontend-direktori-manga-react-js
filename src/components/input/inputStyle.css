@@ -1,38 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  .input-card{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+  .input-card {
+    @apply flex flex-col items-center justify-center bg-[white] px-5 py-2.5 rounded-[10px];
   }
-
-  .input-card{
-      border-radius: 10px;
-      padding: 10px 20px;
-      background-color: white;
+  .input-card .form-group {
+    @apply mb-2.5;
   }
-
-  .input-card .form-group{
-    margin-bottom: 10px;
-  }
-
   input {
-    border: silver solid 2px;
-    border-radius: 10px;
-    background: 0;
-    outline: none;
-    width: 80vw;
-    max-width: 400px;
-    font-size: 1.5em;
+    @apply w-[80vw] max-w-[400px] text-[1.5em] rounded-[10px] border-[silver] border-solid border-[2px] focus:pb-[5px] outline-none bg-none;
     transition: padding 0.3s 0.2s ease;
-
-    &:focus {
-      padding-bottom: 5px;
-    }
-
-    &:focus + .line {
-      &:after {
-        transform: scaleX(1);
-      }
-    }
+  }
+  input:focus + .line:after {
+    @apply scale-x-100;
   }

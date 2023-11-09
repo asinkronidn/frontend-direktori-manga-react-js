@@ -1,50 +1,32 @@
 .table-container {
-  border-radius: 10px;
-  padding: 10px 20px;
-  background-color: white;
+  @apply bg-[white] px-5 py-2.5 rounded-[10px] bg-[white] m-5 px-5 py-2.5;
 }
-
 .table-container table {
-  color: var(--text-main);
-  width: 100%;
+  @apply text-[color:var(--text-main)] w-full;
 }
 
 /* tabelStyle.css */
 .table-container {
-  padding: 10px 20px;
-  background-color: white;
-  margin: 20px; /* Add margin for the entire table container */
+  /* Add margin for the entire table container */
 }
-
 .custom-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px;
+  @apply w-full bg-white rounded-[10px] border-collapse;
   font-family: Arial, sans-serif;
-  background-color: #fff;
 }
-
 .custom-table th {
-  color: var(--text-main);
-  text-align: left;
-  padding: 20px;
-  border-bottom: 2px solid #ddd;
+  @apply text-[color:var(--text-main)] text-left p-5 border-b-2 border-b-[#ddd] border-solid;
 }
-
 .custom-table td {
-  padding: 15px;
-  border-bottom: 2px solid #ddd;
+  @apply p-[15px] border-b-2 border-b-[#ddd] border-solid;
 }
-.custom-table td .wrapper{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.custom-table td .wrapper {
+  @apply flex items-center justify-between;
 }
-
-.custom-table img{
-    height: 20px;
-    width: 20px;
+.custom-table img {
+  @apply h-5 w-5;
 }
 .table-row {
-  margin-bottom: 50px; /* Add margin between <tr> elements */
+  @apply mb-[50px];
+
+  /* Add margin between <tr> elements */
 }
