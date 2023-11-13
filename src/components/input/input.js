@@ -1,54 +1,35 @@
 import React, { useState } from "react";
 import "./inputStyle.css";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 
 const Input = () => {
-  // State untuk menyimpan data form
-  const [formData, setFormData] = useState({
-    judul: "",
-    penulis: "",
-    penerbit: "",
-    tanggal_rilis: "",
-    rating: "",
-    jumlah_volume: "",
-    url_baca: "",
-  });
-
 
   const navigate = useNavigate()
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  
   // Fungsi untuk mengirim data form ke server
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (
-      formData.jumlah_volume <= 0 ||
-      formData.rating <= 0
-    ) {
-      alert("Nilai harus diatas 0.");
-      setFormData({
-        judul: "",
-        jumlah_volume: "",
-        penerbit: "",
-        penulis: "",
-        rating: "",
-        tanggal_rilis: "",
-        url_baca: "",
-      });
-      return;
-    }
+  const onSubmit = async (data) => {
+    console.log(data);
 
     function removeHyphens(inputString) {
       return inputString.replace(/-/g, "");
     }
 
-    const dateWithoutHyphens = Number(removeHyphens(formData.tanggal_rilis));
+    const dateWithoutHyphens = Number(removeHyphens(data.tanggal_rilis));
 
     const newFormData = {
-      ...formData,
+      ...data,
       tanggal_rilis: dateWithoutHyphens,
     };
+
+    console.log(newFormData);
     // Mengirim data newFormData ke server dengan metode POST
     try {
       const response = await fetch("http://localhost:3001/mangalist", {
@@ -60,16 +41,7 @@ const Input = () => {
       });
 
       if (response.ok) {
-        // Reset form data jika sukses
-        setFormData({
-          judul: "",
-          jumlah_volume: "",
-          penerbit: "",
-          penulis: "",
-          rating: "",
-          tanggal_rilis: "",
-          url_baca: "",
-        });
+        console.log(response);
       } else {
         console.error("Failed to post data.");
       }
@@ -85,18 +57,9 @@ const Input = () => {
     }
   };
 
-  // Fungsi untuk mengupdate state formData saat input fields berubah
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
   return (
     <div className="input-container">
-      <form className="input-card" onSubmit={handleSubmit}>
+      <form className="input-card" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
           <input
             required
@@ -104,9 +67,9 @@ const Input = () => {
             type="text"
             id="judul"
             name="judul"
-            value={formData.judul}
-            onChange={handleInputChange}
+            {...register("judul", {required : true})}
           />
+          {errors.judul && <p className="text-red-500">{errors.judul.message}</p>}
         </div>
         <div className="form-group">
           <input
@@ -115,9 +78,9 @@ const Input = () => {
             type="number"
             id="jumlah_volume"
             name="jumlah_volume"
-            value={formData.jumlah_volume}
-            onChange={handleInputChange}
-          />
+            {...register("jumlah_volume", {required : true, valueAsNumber: true, validate: (value) => value > 0 || "Value Harus Lebih dari 0"})}
+            />
+            {errors.jumlah_volume && <p className="text-red-500">{errors.jumlah_volume.message}</p>}
         </div>
         <div className="form-group">
           <input
@@ -126,9 +89,9 @@ const Input = () => {
             type="text"
             id="penerbit"
             name="penerbit"
-            value={formData.penerbit}
-            onChange={handleInputChange}
+            {...register("penerbit", {required : true})}
           />
+          {errors.penerbit && <p className="text-red-500">{errors.penerbit.message}</p>}
         </div>
         <div className="form-group">
           <input
@@ -137,9 +100,9 @@ const Input = () => {
             type="text"
             id="penulis"
             name="penulis"
-            value={formData.penulis}
-            onChange={handleInputChange}
+            {...register("penulis", {required : true})}
           />
+          {errors.penulis && <p className="text-red-500">{errors.penulis.message}</p>}
         </div>
         <div className="form-group">
           <input
@@ -148,9 +111,9 @@ const Input = () => {
             type="number"
             id="rating"
             name="rating"
-            value={formData.rating}
-            onChange={handleInputChange}
+            {...register("rating", {required : true, valueAsNumber: true, validate: (value) => 6 > value > 0 || "Value Harus Kurang dari 5"})}
           />
+          {errors.rating && <p className="text-red-500">{errors.rating.message}</p>}
         </div>
         <div className="form-group">
           <input
@@ -159,9 +122,9 @@ const Input = () => {
             type="date"
             id="tanggal_rilis"
             name="tanggal_rilis"
-            value={formData.tanggal_rilis}
-            onChange={handleInputChange}
+            {...register("tanggal_rilis", {required : true})}
           />
+          {errors.tanggal_rilis && <p className="text-red-500">{errors.tanggal_rilis.message}</p>}
         </div>
         <div className="form-group">
           <input
@@ -170,12 +133,14 @@ const Input = () => {
             type="url_baca"
             id="url_baca"
             name="url_baca"
-            value={formData.url_baca}
-            onChange={handleInputChange}
+            {...register("url_baca", {required : true})}
           />
+          {errors.url_baca && <p className="text-red-500">{errors.url_baca.message}</p>}
         </div>
-        <button type="submit">Submit</button>
-        <button onClick={()=>navigate("/")}>Back</button>
+       <div className="flex justify-between gap-10">
+        <button type="submit" className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Submit</button>
+        <button onClick={()=>navigate("/")} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 text-gray-500 hover:border-blue-600 hover:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500 dark:hover:border-blue-600 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Back</button>
+        </div>
       </form>
     </div>
   );
